@@ -8,7 +8,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/orders', {
+        const response = await axios.get('https://mernmyprojectbackend.onrender.com/orders', {
           headers: { Authorization: token }
         });
         setOrders(response.data.orders);
@@ -35,7 +35,11 @@ const Orders = () => {
                     <div className="flex items-center gap-3">
                       {/* Optional: Add product image if available/populated */}
                       {item.product &&
-                        <img src={item.product.image} alt={item.product.name} className="w-12 h-12 object-cover rounded" />
+                        <img
+                          src={item.product.image.startsWith('http') ? item.product.image.replace("http://localhost:3000", "https://mernmyprojectbackend.onrender.com") : `https://mernmyprojectbackend.onrender.com${item.product.image.startsWith('/') ? '' : '/'}${item.product.image}`}
+                          alt={item.product.name}
+                          className="w-12 h-12 object-cover rounded"
+                        />
                       }
                       <div>
                         <p className="font-medium text-gray-800">{item.product ? item.product.name : 'Unknown Product'}</p>

@@ -7,11 +7,20 @@ const ProductList = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/products")
+        fetch("https://mernmyprojectbackend.onrender.com/products")
             .then((res) => res.json())
             .then((data) => setProducts(data))
             .catch((err) => console.error("Error loading products:", err));
     }, []);
+
+    // Helper to construct image URL
+    const getImageUrl = (image) => {
+        if (!image) return "https://via.placeholder.com/150"; // Placeholder if missing
+        if (image.startsWith("http")) {
+            return image.replace("http://localhost:3000", "https://mernmyprojectbackend.onrender.com");
+        }
+        return `https://mernmyprojectbackend.onrender.com${image.startsWith("/") ? "" : "/"}${image}`;
+    };
 
     return (
         <>
@@ -23,7 +32,7 @@ const ProductList = () => {
                             key={product._id}
                             name={product.name}
                             price={typeof product.sell_price === 'number' ? `₹${product.sell_price}` : product.sell_price}
-                            image={product.image}
+                            image={getImageUrl(product.image)}
                             onAddToCart={() => addToCart(product)}
                         />
                     );
