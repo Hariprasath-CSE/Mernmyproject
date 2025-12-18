@@ -13,15 +13,6 @@ const ProductList = () => {
             .catch((err) => console.error("Error loading products:", err));
     }, []);
 
-    // Helper to construct image URL
-    const getImageUrl = (image) => {
-        if (!image) return "https://via.placeholder.com/150"; // Placeholder if missing
-        if (image.startsWith("http")) {
-            return image.replace("http://localhost:3000", "https://mernmyprojectbackend.onrender.com");
-        }
-        return `https://mernmyprojectbackend.onrender.com${image.startsWith("/") ? "" : "/"}${image}`;
-    };
-
     return (
         <>
             <div className="w-[800px] mx-auto mt-10 grid grid-cols-3 gap-4">
