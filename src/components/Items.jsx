@@ -13,15 +13,6 @@ export default function Items() {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
-  // Helper to construct image URL
-  const getImageUrl = (image) => {
-    if (!image) return "https://via.placeholder.com/150";
-    if (image.startsWith("http")) {
-      return image.replace("http://localhost:3000", "https://mernmyprojectbackend.onrender.com");
-    }
-    return `https://mernmyprojectbackend.onrender.com${image.startsWith("/") ? "" : "/"}${image}`;
-  };
-
   return (
     <div className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {items.map((item) => (
@@ -30,7 +21,7 @@ export default function Items() {
           name={item.name}
           price={typeof item.sell_price === 'number' ? `₹${item.sell_price}` : item.sell_price}
           originalPrice={item.original_price ? (typeof item.original_price === 'number' ? `₹${item.original_price}` : item.original_price) : null}
-          image={getImageUrl(item.image)}
+          image={item.image_url}
           onAddToCart={() => addToCart(item)}
         />
       ))}
