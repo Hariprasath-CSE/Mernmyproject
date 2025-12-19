@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Footer from './components/Footer'
 import LoginForm from './components/LoginForm'
-import ProductList from './components/ProductList.jsx'
 import Header from './components/Header.jsx'
 import Items from './components/Items.jsx'
 import AddProduct from './components/AddProduct.jsx'
@@ -82,13 +81,12 @@ const App = () => {
                 <>
                   <Hero />
                   <Items />
-                  <ProductList />
                   <Footer />
                 </>
               )}
             />
 
-            <Route path="/products" element={<ProductList />} />
+            <Route path="/products" element={<Items />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/add" element={<AddProduct />} />
             <Route path="/login" element={<LoginForm />} />
