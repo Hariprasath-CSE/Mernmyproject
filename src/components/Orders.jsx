@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getImageUrl } from "../utils";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -8,7 +9,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('https://mernmyprojectbackend.onrender.com/orders', {
+        const response = await axios.get('http://localhost:3000/orders', {
           headers: { Authorization: token }
         });
         setOrders(response.data.orders);
@@ -36,7 +37,7 @@ const Orders = () => {
                       {/* Optional: Add product image if available/populated */}
                       {item.product &&
                         <img
-                          src={item.product.image.startsWith('http') ? item.product.image.replace("http://localhost:3000", "https://mernmyprojectbackend.onrender.com") : `https://mernmyprojectbackend.onrender.com${item.product.image.startsWith('/') ? '' : '/'}${item.product.image}`}
+                          src={getImageUrl(item.product.image || item.product.image_url)}
                           alt={item.product.name}
                           className="w-12 h-12 object-cover rounded"
                         />

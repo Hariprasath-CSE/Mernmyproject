@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import { CartContext } from "./CartContext";
+import { getImageUrl } from "../utils";
 
 export default function Items() {
   const { addToCart } = useContext(CartContext);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch("https://mernmyprojectbackend.onrender.com/products")
+    fetch("http://localhost:3000/products")
       .then((response) => response.json())
       .then((data) => setItems(data))
       .catch((error) => console.error("Error fetching products:", error));
@@ -21,7 +22,7 @@ export default function Items() {
           name={item.name}
           price={typeof item.sell_price === 'number' ? `₹${item.sell_price}` : item.sell_price}
           originalPrice={item.original_price ? (typeof item.original_price === 'number' ? `₹${item.original_price}` : item.original_price) : null}
-          image={item.image_url}
+          image={getImageUrl(item.image || item.image_url)}
           onAddToCart={() => addToCart(item)}
         />
       ))}

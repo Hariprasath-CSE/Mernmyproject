@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 
+import { getImageUrl } from "../utils";
+
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  const API_URL = "https://mernmyprojectbackend.onrender.com/cart";
+  const API_URL = "http://localhost:3000/cart";
 
   const getHeaders = () => {
     const token = localStorage.getItem('token');
@@ -21,7 +23,7 @@ export function CartProvider({ children }) {
       id: item.product._id,
       name: item.product.name,
       price: item.product.sell_price,
-      image: item.product.image,
+      image: getImageUrl(item.product.image || item.product.image_url),
       quantity: item.quantity
     }));
   };
@@ -98,7 +100,7 @@ export function CartProvider({ children }) {
 
   async function placeOrder() {
     try {
-      const response = await fetch("https://mernmyprojectbackend.onrender.com/orders", {
+      const response = await fetch("http://localhost:3000/orders", {
         method: "POST",
         headers: getHeaders()
       });

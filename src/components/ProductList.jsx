@@ -1,15 +1,23 @@
 import React, { useEffect, useState, useContext } from "react";
 import ProductCard from "./ProductCard";
 import { CartContext } from "./CartContext";
+import { getImageUrl } from "../utils";
 
 const ProductList = () => {
     const { addToCart } = useContext(CartContext);
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch("https://mernmyprojectbackend.onrender.com/products")
+        // Changed to local server to avoid 401 and use current running backend
+        fetch("http://localhost:3000/products")
             .then((res) => res.json())
-            .then((data) => setProducts(data))
+            .then((data) => {
+                if (Array.isArray(data)) {
+                    setProducts(data);
+                } else {
+                    console.error("Data received is not an array:", data);
+                }
+            })
             .catch((err) => console.error("Error loading products:", err));
     }, []);
 
@@ -23,7 +31,7 @@ const ProductList = () => {
                             key={product._id}
                             name={product.name}
                             price={typeof product.sell_price === 'number' ? `₹${product.sell_price}` : product.sell_price}
-                            image={getImageUrl(product.image)}
+                            image={getImageUrl(product.image || product.image_url)}
                             onAddToCart={() => addToCart(product)}
                         />
                     );
