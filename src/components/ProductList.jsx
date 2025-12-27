@@ -9,7 +9,7 @@ const ProductList = () => {
 
     useEffect(() => {
         // Changed to local server to avoid 401 and use current running backend
-        fetch("http://localhost:3000/products")
+        fetch("https://mernmyprojectbackend.onrender.com/products")
             .then((res) => res.json())
             .then((data) => {
                 if (Array.isArray(data)) {

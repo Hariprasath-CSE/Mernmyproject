@@ -12,7 +12,7 @@ export default function Items() {
   const itemsPerPage = 8;
 
   useEffect(() => {
-    fetch("http://localhost:3000/products")
+    fetch("https://mernmyprojectbackend.onrender.com/products")
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {

@@ -7,7 +7,7 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  const API_URL = "http://localhost:3000/cart";
+  const API_URL = "https://mernmyprojectbackend.onrender.com/cart";
 
   const getHeaders = () => {
     const token = localStorage.getItem('token');
@@ -100,7 +100,7 @@ export function CartProvider({ children }) {
 
   async function placeOrder() {
     try {
-      const response = await fetch("http://localhost:3000/orders", {
+      const response = await fetch("https://mernmyprojectbackend.onrender.com/orders", {
         method: "POST",
         headers: getHeaders()
       });
